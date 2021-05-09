@@ -52,37 +52,41 @@ fetch('https://randomuser.me/api/')
   .then(toJson)
   .then((data) => {
     console.log(data.affirmation);
-  //   return fetch(`https://api.nationalize.io/?name=${firstName}`);
+    return fetch(`https://api.nationalize.io/?name=${firstName}`);
   })
-  // .then(toJson)
-  // .then((data) => {
-  //   let countryDataArray = data.country;
-  //   let countryIds = [];
-  //   let listOfOtherCountries = [];
-  //   let matchingValue = [];
-  //   for (let i = 0; i < countryDataArray.length; i++) {
-  //     countryIds.push(countryDataArray[i].country_id);
-  //     if (!countryIds[0]) {
-  //       throw new Error('No countries were matched to the specified user');
-  //     } else {
-  //       continue;
-  //     }
-  //   }
+  .then(toJson)
+  .then((data) => {
+    let countryDataArray = data.country;
+    let countryIds = [];
+    let listOfOtherCountries = [];
+    let matchingValue = [];
+    for (let i = 0; i < countryDataArray.length; i++) {
+      countryIds.push(countryDataArray[i].country_id);
+      if (!countryIds[0]) {
+        throw new Error('No countries were matched to the specified user');
+      } else {
+        continue;
+      }
+    }
     
-  //   for (let j = 0; j < countryIds.length; j++) {
-  //     if (countryIds[j] === userCountryCode) {
-  //       matchingValue.push(countryIds[j]);
-  //     } else {
-  //       listOfOtherCountries.push(countryIds[j])
-  //     }
-  //   }
-  //   if (matchingValue === userCountryCode) {
-  //     console.log(`Country verified. Other possible countries: ${listOfOtherCountries.toString()} `)
-  //   } else {
-  //     console.log(`Country discrepancy, ${countryIds.toString()} does not contain ${userCountryCode}`)
-  //   }
-
-  // })
+    for (let j = 0; j < countryIds.length; j++) {
+      if (countryIds[j] === userCountryCode) {
+        matchingValue.push(countryIds[j]);
+      } else {
+        listOfOtherCountries.push(countryIds[j])
+      }
+    }
+    if (matchingValue === userCountryCode) {
+      console.log(`Country verified. Other possible countries: ${listOfOtherCountries.toString()} `)
+    } else {
+      console.log(`Country discrepancy, ${countryIds.toString()} does not contain ${userCountryCode}`)
+    }
+    return fetch(`https://www.affirmations.dev/`);
+  })
+  .then(toJson)
+  .then((data) => {
+    console.log(data.affirmation);
+  })
   // .catch((err) => console.log(`Error: ${err.message}`));
 
 
