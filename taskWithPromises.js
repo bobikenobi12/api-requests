@@ -47,13 +47,13 @@ fetch('https://randomuser.me/api/')
             predictedAge - userAge
           )} years difference.`
         );
-    // return fetch(`https://www.affirmations.dev/`);
+    return fetch(`https://www.affirmations.dev/`);
   })
-  // .then(toJson)
-  // .then((data) => {
-  //   console.log(data.affirmation);
+  .then(toJson)
+  .then((data) => {
+    console.log(data.affirmation);
   //   return fetch(`https://api.nationalize.io/?name=${firstName}`);
-  // })
+  })
   // .then(toJson)
   // .then((data) => {
   //   let countryDataArray = data.country;
@@ -85,7 +85,7 @@ fetch('https://randomuser.me/api/')
   // })
   // .catch((err) => console.log(`Error: ${err.message}`));
 
-  
+
 
 // fetch('https://randomuser.me/api/')
 //   .then((response) => response.json())
