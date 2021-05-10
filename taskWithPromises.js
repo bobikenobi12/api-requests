@@ -13,11 +13,14 @@ fetch('https://randomuser.me/api/')
     userAge = data.results[0].dob.age;
     userCountry = data.results[0].location.country;
     userCountryCode = data.results[0].nat;
+    initialDate = new Date(data.results[0].dob.date);
+    userYearOfBirth = initialDate.getFullYear();
     console.log(`First name: ${firstName}`);
     console.log(`User gender: ${userGender}`);
     console.log(`User age: ${userAge}`);
     console.log(`User country: ${userCountry}`);
     console.log(`User country code: ${userCountryCode}`);
+    console.log(`User year of birth: ${userYearOfBirth}`);
     return fetch(`https://api.genderize.io/?name=${firstName}`);
   })
   .then(toJson)
@@ -86,6 +89,16 @@ fetch('https://randomuser.me/api/')
   .then(toJson)
   .then((data) => {
     console.log(data.affirmation);
+    return fetch(`https://date.nager.at/Api/v2/PublicHolidays/${userYearOfBirth}/${userCountryCode.toLowerCase()}`);
+  })
+  .then(toJson)
+  .then((data) => {
+   let filteredHolidays = data.filter(el => el.launchYear > userYearOfBirth || el.launchYear === null);
+   let formatArray = [];
+   for (let i = 0; i < filteredHolidays.length; i++) {
+    formatArray.push(`${filteredHolidays[i].localName}(${filteredHolidays[i].name})`)   
+   }
+   console.log(formatArray.toString());
   })
   // .catch((err) => console.log(`Error: ${err.message}`));
 
