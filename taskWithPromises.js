@@ -100,7 +100,7 @@ fetch('https://randomuser.me/api/')
    }
    console.log(formatArray.toString());
   })
-  // .catch((err) => console.log(`Error: ${err.message}`));
+  .catch((err) => console.log(`Error: ${err.message}`));
 
 
 
