@@ -34,6 +34,15 @@ async function user() {
     .then(toJson)
     .then((data) => {
       firstName = data.results[0].name.first;
+      for (let i = 0; i < firstName.length; i++) {
+        const code = firstName.charCodeAt(i);
+        if (!((code >= 97 && code <= 122) || (code >= 65 && code <= 90))) {
+          throw new Error('The first name must contain only A-Z  letters!');
+        } else {
+          continue;
+        }
+        
+      }
       userGender = data.results[0].gender;
       userAge = data.results[0].dob.age;
       userCountry = data.results[0].location.country;
