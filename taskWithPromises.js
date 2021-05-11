@@ -9,6 +9,15 @@ fetch('https://randomuser.me/api/')
   .then(toJson)
   .then((data) => {
     firstName = data.results[0].name.first;
+    for (let i = 0; i < firstName.length; i++) {
+      const code = firstName.charCodeAt(i);
+      if (!((code >= 97 && code <= 122) || (code >= 65 && code <= 90))) {
+        throw new Error('The first name must contain only A-Z  letters!');
+      } else {
+        continue;
+      }
+      
+    }
     userGender = data.results[0].gender;
     userAge = data.results[0].dob.age;
     userCountry = data.results[0].location.country;
@@ -71,38 +80,43 @@ fetch('https://randomuser.me/api/')
         continue;
       }
     }
-    
+
     for (let j = 0; j < countryIds.length; j++) {
       if (countryIds[j] === userCountryCode) {
         matchingValue.push(countryIds[j]);
       } else {
-        listOfOtherCountries.push(countryIds[j])
+        listOfOtherCountries.push(countryIds[j]);
       }
     }
     if (matchingValue === userCountryCode) {
-      console.log(`Country verified. Other possible countries: ${listOfOtherCountries.toString()} `)
+      console.log(
+        `Country verified. Other possible countries: ${listOfOtherCountries.toString()} `
+      );
     } else {
-      console.log(`Country discrepancy, ${countryIds.toString()} does not contain ${userCountryCode}`)
+      console.log(
+        `Country discrepancy, ${countryIds.toString()} does not contain ${userCountryCode}`
+      );
     }
     return fetch(`https://www.affirmations.dev/`);
   })
   .then(toJson)
   .then((data) => {
     console.log(data.affirmation);
-    return fetch(`https://date.nager.at/Api/v2/PublicHolidays/${userYearOfBirth}/${userCountryCode.toLowerCase()}`);
+    return fetch(
+      `https://date.nager.at/Api/v2/PublicHolidays/${userYearOfBirth}/${userCountryCode.toLowerCase()}`
+    );
   })
   .then(toJson)
   .then((data) => {
-   let filteredHolidays = data.filter(el => el.launchYear > userYearOfBirth || el.launchYear === null);
-   let formatArray = [];
-   for (let i = 0; i < filteredHolidays.length; i++) {
-    formatArray.push(`${filteredHolidays[i].localName}(${filteredHolidays[i].name})`)   
-   }
-   console.log(formatArray.toString());
+    let filteredHolidays = data.filter(
+      (el) => el.launchYear > userYearOfBirth || el.launchYear === null
+    );
+    let formatArray = [];
+    for (let i = 0; i < filteredHolidays.length; i++) {
+      formatArray.push(
+        `${filteredHolidays[i].localName}(${filteredHolidays[i].name})`
+      );
+    }
+    console.log(formatArray.toString());
   })
   .catch((err) => console.log(`Error: ${err.message}`));
-
-
-
-
-
